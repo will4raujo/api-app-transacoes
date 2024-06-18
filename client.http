@@ -51,3 +51,50 @@ DELETE {{baseUrl}}/categories/30eac271-c5a5-497a-83ab-060658e8f8cc
 Content-Type: application/json
 
 ###
+
+# @name create_transaction
+
+POST {{baseUrl}}/transactions
+Content-Type: application/json
+
+{
+	"value": 100,
+	"description": "Transaction Example",
+	"date": "2021-01-01T00:00:00.000Z",
+	"categoryId": "41da446d-1bbd-4c2d-aabb-1472a2ad75ce"
+}
+
+###
+
+# @name get_transactions
+
+GET {{baseUrl}}/transactions
+Content-Type: application/json
+
+###
+
+# @name delete_transaction
+
+DELETE {{baseUrl}}/transactions/30eac271-c5a5-497a-83ab-060658e8f8cc
+Content-Type: application/json
+
+###
+
+# @name update_transaction
+
+PUT {{baseUrl}}/transactions/30eac271-c5a5-497a-83ab-060658e8f8cc
+Content-Type: application/json
+
+{
+	"value": 200,
+	"description": "Transaction Example Updated",
+	"date": "2021-01-01T00:00:00.000Z",
+	"categoryId": "41da446d-1bbd-4c2d-aabb-1472a2ad75ce"
+}
+
+###
+
+# @name get_summary
+
+GET {{baseUrl}}/transactions/summary
+Content-Type: application/json
