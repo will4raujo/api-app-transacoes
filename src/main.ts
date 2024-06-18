@@ -9,6 +9,9 @@ async function bootstrap() {
   const confiService: ConfigService<Env, true> = app.get(ConfigService)
   const port = confiService.get('PORT', { infer: true })
 
-  await app.listen(port)
+  app.enableCors();
+
+  await app.listen(port);
+  console.log(`Aplicação rodando na porta ${port}`);
 }
 bootstrap()
