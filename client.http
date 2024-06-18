@@ -1,0 +1,53 @@
+@baseUrl = http://localhost:3333 
+
+# @name create_account
+
+POST {{baseUrl}}/accounts
+Content-Type: application/json
+
+{
+	"name": "ganso",
+	"email": "ganso@example.com",
+	"password": "123"
+}
+
+###
+
+# @name authenticate
+
+POST {{baseUrl}}/sessions
+Content-Type: application/json
+
+{
+	"email": "ganso",
+	"password": "123"
+}
+
+###
+
+# @name create_category
+
+POST {{baseUrl}}/categories
+Content-Type: application/json
+
+{
+	"name": "Category Example",
+	"type": "fixed"
+}
+
+###
+
+# @name get_categories
+
+GET {{baseUrl}}/categories
+Content-Type: application/json
+
+
+###
+
+# @name delete_category
+
+DELETE {{baseUrl}}/categories/30eac271-c5a5-497a-83ab-060658e8f8cc
+Content-Type: application/json
+
+###
