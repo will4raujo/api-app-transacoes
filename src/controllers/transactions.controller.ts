@@ -6,7 +6,7 @@ import { Body, ConflictException, Controller, Delete, Get, HttpCode, Param, Post
 const transactionBodySchema = z.object({
     value: z.number(),
     description: z.string(),
-    categoryId: z.string(),
+    categoryId: z.number(),
     date: z.string().refine((date) => !isNaN(Date.parse(date)), {
       message: "Invalid date format"
   }),

@@ -1,4 +1,4 @@
-import { Body, ConflictException, Delete, Get, HttpCode, Param, Post, UsePipes } from '@nestjs/common'
+import { Body, ConflictException, Delete, Get, HttpCode, Param, Post, UsePipes, Query } from '@nestjs/common'
 import { z } from 'zod'
 import { PrismaService } from 'src/prisma/prisma.service'
 import { ZodValidationPipe } from 'src/pipes/zod-validation-pipe'
@@ -21,6 +21,7 @@ export class CategoryController {
   async handle(@Body() body: CategoryBody) {
 
     const { name, type } = categoryBodySchema.parse(body)
+    console.log(name, type)
 
     await this.prisma.category.create({
       data: {
@@ -30,13 +31,19 @@ export class CategoryController {
     })
   }
   
-  @Get()
-  async list() {
-    return this.prisma.category.findMany()
-  }
+  @Get('/:type')
+  async listCategories(@Param('type') type: string) {
+    const categories = await this.prisma.category.findMany({
+      where: {
+        type: type,
+      },
+    })
 
+    return categories
+  }
+  
   @Delete('/:id')
-  async deleteCategory(@Param('id') id: string) {
+  async deleteCategory(@Param('id') id: number) {
     const category = await this.prisma.category.findUnique({
       where: {
         id: id,

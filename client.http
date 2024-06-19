@@ -39,7 +39,7 @@ Content-Type: application/json
 
 # @name get_categories
 
-GET {{baseUrl}}/categories
+GET {{baseUrl}}/categories/custom
 Content-Type: application/json
 
 
