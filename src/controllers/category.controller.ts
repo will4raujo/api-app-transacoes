@@ -5,6 +5,7 @@ import { ZodValidationPipe } from 'src/pipes/zod-validation-pipe'
 import { Controller } from '@nestjs/common'
 
 const categoryBodySchema = z.object({
+  id: z.number().optional(),
   name: z.string(),
   type: z.string(), 
 })

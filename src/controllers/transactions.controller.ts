@@ -9,7 +9,7 @@ const transactionBodySchema = z.object({
     categoryId: z.number(),
     date: z.string().refine((date) => !isNaN(Date.parse(date)), {
       message: "Invalid date format"
-  }),
+    }).transform((date) => new Date(date).toISOString()),
 })
 
 type TransactionBody = z.infer<typeof transactionBodySchema>
@@ -22,21 +22,38 @@ export class TransactionsController {
   @HttpCode(201)
   @UsePipes(new ZodValidationPipe(transactionBodySchema))
   async handle(@Body() body: TransactionBody) {
-    const { value, description, categoryId, date } = transactionBodySchema.parse(body)
-
+    const { description, value, date, categoryId } = transactionBodySchema.parse(body)
+    console.log('passou aqui')
     await this.prisma.transaction.create({
       data: {
-        value,
         description,
-        categoryId,
+        value,
         date,
+        categoryId,
       },
     })
   }
 
   @Get()
   async list() {
-    return this.prisma.transaction.findMany()
+    return this.prisma.transaction.findMany({
+      include: {
+        category: {
+          select: {
+            name: true,
+          }
+        }
+      }
+    })
+  }
+
+  @Get('/:id')
+  async getTransactionById(@Param('id') id: string) {
+    return this.prisma.transaction.findUnique({
+      where: {
+        id: id,
+      },
+    })
   }
 
   @Put('/:id')
@@ -75,7 +92,7 @@ export class TransactionsController {
     })
   }
 
-  @Get('/summary')
+  @Post('/summary')
   async getExpenseSummaryByCategory() {
     const summary = await this.prisma.transaction.groupBy({
       by: ['categoryId'],
@@ -85,12 +102,30 @@ export class TransactionsController {
       _count: {
         _all: true,
       },
-    })
-
+    });
+  
+    const categoryIds = summary.map(item => item.categoryId);
+    const categories = await this.prisma.category.findMany({
+      where: {
+        id: {
+          in: categoryIds,
+        },
+      },
+      select: {
+        id: true,
+        name: true,
+      },
+    });
+  
+    const categoryMap = categories.reduce((acc, category) => {
+      acc[category.id] = category.name;
+      return acc;
+    }, {});
+  
     return summary.map(item => ({
-      categoryId: item.categoryId,
+      categoryName: categoryMap[item.categoryId],
       totalValue: item._sum.value,
       transactionCount: item._count._all,
-    }))
+    }));
   }
 }
