@@ -37,11 +37,17 @@ Content-Type: application/json
 
 ###
 
-# @name get_categories
+# @name get_categories_by_type
 
 GET {{baseUrl}}/categories/custom
 Content-Type: application/json
 
+###
+
+# @name get_categories
+
+GET {{baseUrl}}/categories
+Content-Type: application/json
 
 ###
 

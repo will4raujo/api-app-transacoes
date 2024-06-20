@@ -42,6 +42,13 @@ export class CategoryController {
 
     return categories
   }
+
+  @Get()
+  async listAllCategories() {
+    const categories = await this.prisma.category.findMany()
+
+    return categories
+  }
   
   @Delete('/:id')
   async deleteCategory(@Param('id') id: number) {
