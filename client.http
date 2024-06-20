@@ -61,7 +61,7 @@ Content-Type: application/json
 	"value": 100,
 	"description": "Transaction Example",
 	"date": "2021-01-01T00:00:00.000Z",
-	"categoryId": "41da446d-1bbd-4c2d-aabb-1472a2ad75ce"
+	"categoryId": 23
 }
 
 ###
@@ -96,5 +96,5 @@ Content-Type: application/json
 
 # @name get_summary
 
-GET {{baseUrl}}/transactions/summary
+POST {{baseUrl}}/transactions/summary
 Content-Type: application/json
