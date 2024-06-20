@@ -1,41 +1,78 @@
-Projeto NestJS com PostgreSQL e Docker
-Este projeto utiliza Node.js com o framework NestJS, PostgreSQL como banco de dados e Docker para simplificar a configuração e execução do ambiente.
+# NestJS Project with PostgreSQL and Docker
 
-Pré-requisitos
-Antes de começar, certifique-se de ter os seguintes softwares instalados em sua máquina:
+### This project uses Node.js with the NestJS framework, PostgreSQL as the database, and Docker to simplify environment setup and execution.
 
-Docker
-Node.js (recomenda-se a versão LTS)
-Docker Compose
-Instruções para configuração
+### Prerequisites
 
-1. Clonar o repositório
-Faça uma cópia do repositório remoto em seu computador:
-  git clone <URL-do-repositório>
-  cd <nome-do-repositório> 
+Before starting, make sure you have the following software installed on your machine:
 
-2. Instalar dependências
-Instale as dependências do Node.js utilizando o comando:
-  npm install
+- Docker
+- Node.js (LTS version recommended)
+- Docker Compose
 
-3. Configurar o Docker
+## Setup Instructions
+1. **Clone the repository**
 
-Crie e inicie os containers Docker utilizando o comando:
-  docker-compose up -d
+Make a copy of the remote repository on your computer:
 
-Certifique-se de que os containers foram iniciados corretamente:
-  docker ps
+```sh
+git clone https://github.com/will4raujo/api-teste-fastpay.git
+cd api-teste-fastpay
+```
+2. **Install dependencies**
 
-4. Verificar portas
-Verifique se as portas 5433 (PostgreSQL) e 3333 (NestJS) estão livres:
-  netstat -an | find "5433"
-  netstat -an | find "3333"
+Install Node.js dependencies using the command:
 
-5. Iniciar a aplicação
-Inicie a aplicação em modo de desenvolvimento:
-  npm run start:dev
+```sh
+npm install
+```
+3. **Configure Docker**
+Create and start Docker containers using the command:
 
+```sh
+docker-compose up -d
+docker ps
+```
 
-Observações
-Certifique-se de que as variáveis de ambiente no arquivo .env estão configuradas corretamente, especialmente a DATABASE_URL para a conexão com o banco de dados PostgreSQL.
-Se houver conflitos de porta, ajuste as portas no arquivo docker-compose.yml e nas configurações da aplicação.
+Ensure the containers have started correctly:
+
+4. **Check ports**
+
+Verify that ports 5433 (PostgreSQL) and 3333 (NestJS) are free:
+
+```sh
+netstat -an | find "5433"
+netstat -an | find "3333"
+```
+**Note:** If the port is different from 3333, make sure to change the api.ts file in the frontend to the desired port.
+
+5. **Run the seed script**
+
+Populate the database with predefined categories:
+
+```sh
+npm run seed
+```
+
+6. **Start the application**
+
+Start the application in development mode:
+
+```sh
+npm run start:dev
+```
+
+7. **Environment Variables**
+
+Ensure that the environment variables in the .env file are correctly configured, especially DATABASE_URL for the 
+PostgreSQL database connection.
+Example:
+
+```env
+DATABASE_URL="postgresql://postgres:postgres@localhost:5433/nest-teste-wa?schema=public"
+JWT_SECRET="yaptsaf"
+```
+
+8. **Port Conflicts**
+
+If there are port conflicts, adjust the ports in the docker-compose.yml file and the application settings accordingly.
