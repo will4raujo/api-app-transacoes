@@ -22,7 +22,6 @@ export class CategoryController {
   async handle(@Body() body: CategoryBody) {
 
     const { name, type } = categoryBodySchema.parse(body)
-    console.log(name, type)
 
     await this.prisma.category.create({
       data: {

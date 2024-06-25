@@ -38,7 +38,6 @@ export class AuthenticateController {
     const passwordMatch = await compare(password, user.password)
 
     if (!passwordMatch) {
-      console.log('Invalid credentials')
       throw new UnauthorizedException('Invalid credentials')
     }
 

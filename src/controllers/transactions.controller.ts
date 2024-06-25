@@ -23,7 +23,6 @@ export class TransactionsController {
   @UsePipes(new ZodValidationPipe(transactionBodySchema))
   async handle(@Body() body: TransactionBody) {
     const { description, value, date, categoryId } = transactionBodySchema.parse(body)
-    console.log('passou aqui')
     await this.prisma.transaction.create({
       data: {
         description,
