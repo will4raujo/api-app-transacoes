@@ -23,6 +23,16 @@ export class CategoryController {
 
     const { name, type } = categoryBodySchema.parse(body)
 
+    const existingCategory = await this.prisma.category.findFirst({
+      where: {
+        name: name,
+      },
+    })
+
+    if (existingCategory) {
+      throw new ConflictException('Categoria já existe')
+    }
+
     await this.prisma.category.create({
       data: {
         name,
@@ -50,22 +60,32 @@ export class CategoryController {
   }
   
   @Delete('/:id')
-  async deleteCategory(@Param('id') id: number) {
+  async deleteCategory(@Param('id') id: string) {
+
     const category = await this.prisma.category.findUnique({
       where: {
-        id: id,
+        id: Number(id),
       },
     })
 
+    const transactions = await this.prisma.transaction.findMany({
+      where: {
+        categoryId: Number(id),
+      },
+    })
+
+    if (transactions.length > 0) {
+      throw new ConflictException('Não é possível deletar uma categoria com transações associadas')
+    }
+
     if (!category) {
-      throw new ConflictException('Category not found')
+      throw new ConflictException('Categoria não encontrada')
     }
 
     await this.prisma.category.delete({
       where: {
-        id: id,
+        id: Number(id),
       },
     })
   }
-
 }
