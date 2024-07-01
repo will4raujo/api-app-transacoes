@@ -17,11 +17,10 @@ Make a copy of the remote repository on your computer:
 
 ```sh
 git clone https://github.com/will4raujo/api-teste-fastpay.git
-cd api-teste-fastpay
 ```
 2. **Install dependencies**
 
-Install Node.js dependencies using the command:
+Install Node.js dependencies using the command inside folder "api_teste_fastpay":
 
 ```sh
 npm install
