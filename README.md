@@ -16,11 +16,11 @@ Before starting, make sure you have the following software installed on your mac
 Make a copy of the remote repository on your computer:
 
 ```sh
-git clone https://github.com/will4raujo/api-teste-fastpay.git
+git clone https://github.com/will4raujo/api-app-transacoes.git
 ```
 2. **Install dependencies**
 
-Install Node.js dependencies using the command inside folder "api_teste_fastpay":
+Install Node.js dependencies using the command inside folder "api-app-transacoes":
 
 ```sh
 npm install
